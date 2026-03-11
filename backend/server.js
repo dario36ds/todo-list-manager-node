@@ -48,7 +48,7 @@ app.put("/list/:id", (req, res) => {
      console.log("PUT request received on /list");
 
   db.run(
-    "UPDATE List SET Title=? WHERE id=?" [name , id],
+    'UPDATE List SET Title="?" WHERE id=?' , [name , id],
     function (err) {
       if (err) return res.status(500).json(err);
 
@@ -62,32 +62,13 @@ app.put("/list/:id", (req, res) => {
 
 
 
-app.post("/carmarca", (req, res) => {
-  const { name } = req.body;
-     console.log("POST request received on /Marca");
-
-  db.run(
-    "INSERT INTO Marche(name) VALUES(?)",
-    [name],
-    function (err) {
-      if (err) return res.status(500).json(err);
-
-      res.json({
-        id: this.lastID,
-        name
-      });
-    }
-  );
-});
-
-
-app.delete("/users/:id", (req,res) => {
+app.delete("/list/:id", (req,res) => {
   const {id} = req.params;
   console.log("DELETE request received on /users");
   console.log(id);
 
   db.run(
-    "DELETE FROM users WHERE id=?",[id],
+    "DELETE FROM List WHERE id=?",[id],
      function (err) {
       if (err) return res.status(500).json(err);
 

@@ -59,13 +59,16 @@ const putListButton=document.getElementById("put-element-button");
 
 
 
-// deleteUsersButton.addEventListener('click', ()=>{
-// apiRequest(host+"/users/"+ deleteUsersField.value , 'DELETE' , { })
-//   .then(data=>{
-//     console.log(data);
+const deleteListIdField=document.getElementById("delete-list-id-field");
+const deleteListButton=document.getElementById("delete-list-button");
 
-//   })
-// });
+deleteListButton.addEventListener('click', ()=>{
+apiRequest(host+"/list/"+ deleteListIdField.value , 'DELETE' , {})
+ .then(data=>{
+   console.log(data);
+
+  })
+});
 
 
 

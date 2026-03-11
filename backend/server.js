@@ -27,28 +27,29 @@ app.post("/list", (req, res) => {
   const { name } = req.body;
      console.log("POST request received on /list");
 
-  db.run(
-    "INSERT INTO List(Title) VALUES(?)",
-    [name],
-    function (err) {
-      if (err) return res.status(500).json(err);
+db.run(
+  "UPDATE List SET Title=? WHERE id=?",
+  [name, id],
+  function (err) {
+    if (err) return res.status(500).json(err);
 
-      res.json({
-        id: this.lastID,
-        name
-      });
-    }
-  );
+    res.json({
+      id,
+      name
+    });
+  }
+);
 });
 
 
 app.put("/list/:id", (req, res) => {
-  const {name} = req.body;
   const {id} = req.params;
+  const {name} = req.body;
      console.log("PUT request received on /list");
 
   db.run(
-    'UPDATE List SET Title="?" WHERE id=?' , [name , id],
+    'UPDATE List SET Title=? WHERE id=?', 
+    [name , id],
     function (err) {
       if (err) return res.status(500).json(err);
 
@@ -59,6 +60,10 @@ app.put("/list/:id", (req, res) => {
     }
   );
 });
+
+
+
+
 
 
 

@@ -1,0 +1,104 @@
+ const express = require("express");
+const cors = require("cors");
+const db = require("./db");
+
+const app = express();
+
+app.use(cors());
+app.use(express.json());
+
+
+app.get("/lists", (req,res)=>{
+  console.log("GET request received");
+  db.all("SELECT Title, id FROM List"),[], function (err) {
+      if (err) return res.status(500).json(err);
+
+      res.json({
+   id: this.lastID,
+        title
+      });
+    };
+});
+
+
+
+app.post("/list", (req, res) => {
+  const { name } = req.body;
+     console.log("POST request received on /list");
+
+  db.run(
+    "INSERT INTO List(Title) VALUES(?)",
+    [name],
+    function (err) {
+      if (err) return res.status(500).json(err);
+
+      res.json({
+        id: this.lastID,
+        name
+      });
+    }
+  );
+});
+
+
+app.put("/list/:id", (req, res) => {
+  const {name} = req.body;
+  const {id} = req.params;
+     console.log("PUT request received on /list");
+
+  db.run(
+    "UPDATE List SET Title=? WHERE id=?" [name , id],
+    function (err) {
+      if (err) return res.status(500).json(err);
+
+      res.json({
+        id,
+        name
+      });
+    }
+  );
+});
+
+
+
+app.post("/carmarca", (req, res) => {
+  const { name } = req.body;
+     console.log("POST request received on /Marca");
+
+  db.run(
+    "INSERT INTO Marche(name) VALUES(?)",
+    [name],
+    function (err) {
+      if (err) return res.status(500).json(err);
+
+      res.json({
+        id: this.lastID,
+        name
+      });
+    }
+  );
+});
+
+
+app.delete("/users/:id", (req,res) => {
+  const {id} = req.params;
+  console.log("DELETE request received on /users");
+  console.log(id);
+
+  db.run(
+    "DELETE FROM users WHERE id=?",[id],
+     function (err) {
+      if (err) return res.status(500).json(err);
+
+      res.json({
+        id
+      });
+    }
+  );
+});
+
+
+
+app.listen(3000, () => {
+  console.log("Server running on http://localhost:3000");
+});

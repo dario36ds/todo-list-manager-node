@@ -10,14 +10,15 @@ app.use(express.json());
 
 app.get("/lists", (req,res)=>{
   console.log("GET request received");
-  db.all("SELECT Title, id FROM List"),[], function (err) {
+   db.all(
+    "SELECT * FROM List",
+    [],
+    function (err, rows) {
       if (err) return res.status(500).json(err);
 
-      res.json({
-   id: this.lastID,
-        title
-      });
-    };
+      res.json(rows);
+    }
+  );
 });
 
 

@@ -6,6 +6,7 @@ const host = "http://localhost:3000";
 
 //GET//
 const getListButton=document.getElementById("get-list-button");
+const getResult=document.getElementById("get-result");
 
 
 getListButton.addEventListener('click', () => {
@@ -17,14 +18,14 @@ getListButton.addEventListener('click', () => {
       for (const user of data){
         const tr = document.createElement("tr");
         const td1 = document.createElement("td");
-        td1.innerHTML=user.marca;
+        td1.innerHTML=user.id;
         tr.appendChild(td1);
         const td2 = document.createElement("td");
-        td2.innerHTML=user.modello;
+        td2.innerHTML=user.Title;
         tr.appendChild(td2);
         table.appendChild(tr);
       }
-getResul.appendChild(table);
+getResult.appendChild(table);
     })
     .catch(error => console.error(error));
 });
@@ -49,7 +50,7 @@ const putListIdField=document.getElementById("put-list-id-field");
 const putListButton=document.getElementById("put-element-button");
 
  putListButton.addEventListener('click', ()=>{
- apiRequest(host+"/list/"+ putListIdField.value , 'PUT', { name: putListTitleField.value})
+ apiRequest(host+"/list/"+putListIdField.value , 'PUT', { name: putListTitleField.value})
   .then(data=>{
     console.log(data);
 

@@ -44,7 +44,7 @@ apiRequest(host+"/list", 'POST', { name: postListField.value})
 });
 
 
-
+ //PUT//
 const putListTitleField=document.getElementById("put-list-title-field");
 const putListIdField=document.getElementById("put-list-id-field");
 const putListButton=document.getElementById("put-element-button");
@@ -58,7 +58,7 @@ const putListButton=document.getElementById("put-element-button");
 });
 
 
-
+//DELETE//
 const deleteListIdField=document.getElementById("delete-list-id-field");
 const deleteListButton=document.getElementById("delete-list-button");
 

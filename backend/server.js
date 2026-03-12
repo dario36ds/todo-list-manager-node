@@ -28,13 +28,12 @@ app.post("/list", (req, res) => {
      console.log("POST request received on /list");
 
 db.run(
-  "UPDATE List SET Title=? WHERE id=?",
-  [name, id],
+  "INSERT INTO List (Title) VALUES (?)",
+  [name],
   function (err) {
     if (err) return res.status(500).json(err);
 
     res.json({
-      id,
       name
     });
   }
@@ -60,10 +59,6 @@ app.put("/list/:id", (req, res) => {
     }
   );
 });
-
-
-
-
 
 
 

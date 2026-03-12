@@ -12,7 +12,6 @@ const getResult=document.getElementById("get-result");
 getListButton.addEventListener('click', () => {
   apiRequest(host+"/list", 'GET', {})
     .then(data => {
-      console.log(data);
       getResult.innerHTML="";
       const table= document.createElement("table");
       for (const user of data){
@@ -76,7 +75,6 @@ apiRequest(host+"/list/"+ deleteListIdField.value , 'DELETE' , {})
 function loadLists(){
   apiRequest(host+"/lists", 'GET', {})
     .then(data => {
-      console.log(data);
       const select=document.querySelector("select");
       select.innerHTML="";
       for (const list of data){
@@ -107,14 +105,19 @@ apiRequest(host+"/element", 'POST', { name: PostElementField.value , listId: Pos
 
 const getElementButton=document.getElementById("get-element-button");
 const getResult2=document.getElementById("get-result2");
-const getElementIdField=document.getElementById("get-element-id-field");
+
 
 getElementButton.addEventListener('click', () => {
-  apiRequest(host+"/list/"+getElementIdField.value+"/elements", 'GET', {})
+  apiRequest(host+"/list/"+PostElementList.value+"/elements", 'GET', {})
     .then(data => {
-      console.log(data);
       getResult2.innerHTML="";
       const table= document.createElement("table");
+      const trH = document.createElement("tr");
+      const th = document.createElement("th");
+      th.textContent = data[0].Title;
+      th.colSpan = 2;
+      trH.appendChild(th);
+      table.appendChild(trH);
       for (const user of data){
         const tr = document.createElement("tr");
         const td1 = document.createElement("td");

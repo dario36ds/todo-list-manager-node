@@ -129,3 +129,12 @@ getResult2.appendChild(table);
     .catch(error => console.error(error));
 });
 
+const DeleteElementIdField = document.getElementById("delete-element-id-field");
+const DeleteElementButton = document.getElementById("delete-element-button");
+
+DeleteElementButton.addEventListener('click', ()=> {
+  apiRequest(host+"/element/"+DeleteElementIdField.value, 'DELETE', {})
+  .then(data => {
+    console.log(data)
+  })
+});

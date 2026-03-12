@@ -113,11 +113,11 @@ app.get("/lists", (req,res) => {
   );
 });
 
+
 app.get("/elements", (req,res) => {
   console.log("GET request received on /elements");
    db.all(
-    "SELECT * FROM Element",
-    [],
+    "SELECT * FROM Element", 
     function (err, rows) {
       if (err) return res.status(500).json(err);
 
@@ -125,6 +125,17 @@ app.get("/elements", (req,res) => {
     }
   );
 });
+
+app.delete("/element/:id", (req,res)=>{
+  const id = req.params.id;
+  console.log("DELETE request received on /element:id");
+  db.run("DELETE FROM Element WHERE id=?", [id],
+    function (err, rows) {
+      if (err) return res.status(500).json(err);
+
+      res.json(rows);
+    });
+})
 
 
 

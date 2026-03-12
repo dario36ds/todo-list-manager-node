@@ -47,7 +47,7 @@ apiRequest(host+"/list", 'POST', { name: postListField.value})
  //PUT//
 const putListTitleField=document.getElementById("put-list-title-field");
 const putListIdField=document.getElementById("put-list-id-field");
-const putListButton=document.getElementById("put-element-button");
+const putListButton=document.getElementById("put-list-button");
 
  putListButton.addEventListener('click', ()=>{
  apiRequest(host+"/list/"+putListIdField.value , 'PUT', { name: putListTitleField.value})
@@ -129,6 +129,8 @@ getResult2.appendChild(table);
     .catch(error => console.error(error));
 });
 
+
+//------DELETE ELEMENTO-----//
 const DeleteElementIdField = document.getElementById("delete-element-id-field");
 const DeleteElementButton = document.getElementById("delete-element-button");
 
@@ -136,5 +138,20 @@ DeleteElementButton.addEventListener('click', ()=> {
   apiRequest(host+"/element/"+DeleteElementIdField.value, 'DELETE', {})
   .then(data => {
     console.log(data)
+  })
+});
+
+//-------- PUT ELEMENTO--------//
+
+const PutElementTextField = document.getElementById("put-element-text-field");
+const PutElementIdField = document.getElementById("put-element-id-field");
+const PutElementButton = document.getElementById("put-element-button");
+
+
+ PutElementButton.addEventListener('click', ()=>{
+ apiRequest(host+"/element/"+PutElementIdField.value , 'PUT', { name: PutElementTextField.value})
+  .then(data=>{
+    console.log(data);
+
   })
 });

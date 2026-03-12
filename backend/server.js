@@ -81,6 +81,10 @@ app.delete("/list/:id", (req,res) => {
 
 
 // ------------------- //
+
+
+
+
 app.post("/element", (req,res) => {
   const { name } = req.body;
   const { listId } = req.body;
@@ -137,6 +141,25 @@ app.delete("/element/:id", (req,res)=>{
     });
 })
 
+
+app.put("/element/:id", (req, res) => {
+  const {id} = req.params;
+  const {name} = req.body;
+     console.log("PUT request received on /Element");
+
+  db.run(
+    'UPDATE Element SET Text=? WHERE id=?', 
+    [name , id],
+    function (err) {
+      if (err) return res.status(500).json(err);
+
+      res.json({
+        id,
+        name
+      });
+    }
+  );
+});
 
 
 app.listen(3000, () => {

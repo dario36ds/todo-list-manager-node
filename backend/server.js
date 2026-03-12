@@ -65,7 +65,6 @@ app.put("/list/:id", (req, res) => {
 app.delete("/list/:id", (req,res) => {
   const {id} = req.params;
   console.log("DELETE request received on /users");
-  console.log(id);
 
   db.run(
     "DELETE FROM List WHERE id=?",[id],
@@ -82,8 +81,25 @@ app.delete("/list/:id", (req,res) => {
 
 
 // ------------------- //
-app.delete("/element", (req,res) => {});
+app.post("/element", (req,res) => {
+  const { name } = req.body;
+  const { listId } = req.body;
+  console.log("POST request received on /element");
+  console.log(listId);
+  db.run("INSERT INTO Element(Text, List_id) VALUES (? , ?)", [name, listId],
+     function (err) {
+      if (err) return res.status(500).json(err);
 
+      res.json({
+        name , listId
+      });
+    }
+  );
+
+});
+
+
+//----LOAD TENDINA-----//
 app.get("/lists", (req,res) => {
   console.log("GET request received on /lists");
    db.all(
@@ -96,6 +112,20 @@ app.get("/lists", (req,res) => {
     }
   );
 });
+
+app.get("/elements", (req,res) => {
+  console.log("GET request received on /elements");
+   db.all(
+    "SELECT * FROM Element",
+    [],
+    function (err, rows) {
+      if (err) return res.status(500).json(err);
+
+      res.json(rows);
+    }
+  );
+});
+
 
 
 app.listen(3000, () => {

@@ -73,17 +73,6 @@ apiRequest(host+"/list/"+ deleteListIdField.value , 'DELETE' , {})
 
 //----- CRUD ELEMENT  -----//
 
-const PostElementButton=document.getElementById("post-element-button");
-const PostElementField=document.getElementById("post-element-field");
-
-PostElementButton.addEventListener('click', ()=>{
-apiRequest(host+"/element", 'POST', { name: PostElementField.value})
-  .then(data=>{
-    console.log(data);
-
-  })
-});
-
 function loadLists(){
   apiRequest(host+"/lists", 'GET', {})
     .then(data => {
@@ -101,3 +90,42 @@ function loadLists(){
 }
 
 loadLists();
+
+const PostElementButton=document.getElementById("post-element-button");
+const PostElementField=document.getElementById("post-element-field");
+const PostElementList=document.getElementById("menu-tendina");
+
+
+PostElementButton.addEventListener('click', ()=>{
+apiRequest(host+"/element", 'POST', { name: PostElementField.value , listId: PostElementList.value})
+  .then(data=>{
+    console.log(data);
+
+  })
+});
+
+
+const getElementButton=document.getElementById("get-element-button");
+const getResult2=document.getElementById("get-result2");
+
+getElementButton.addEventListener('click', () => {
+  apiRequest(host+"/elements", 'GET', {})
+    .then(data => {
+      console.log(data);
+      getResult2.innerHTML="";
+      const table= document.createElement("table");
+      for (const user of data){
+        const tr = document.createElement("tr");
+        const td1 = document.createElement("td");
+        td1.innerHTML=user.id;
+        tr.appendChild(td1);
+        const td2 = document.createElement("td");
+        td2.innerHTML=user.Text;
+        tr.appendChild(td2);
+        table.appendChild(tr);
+      }
+getResult2.appendChild(table);
+    })
+    .catch(error => console.error(error));
+});
+

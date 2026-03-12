@@ -10,7 +10,7 @@ const getResult=document.getElementById("get-result");
 
 
 getListButton.addEventListener('click', () => {
-  apiRequest(host+"/lists", 'GET', {})
+  apiRequest(host+"/list", 'GET', {})
     .then(data => {
       console.log(data);
       getResult.innerHTML="";
@@ -71,5 +71,33 @@ apiRequest(host+"/list/"+ deleteListIdField.value , 'DELETE' , {})
 });
 
 
+//----- CRUD ELEMENT  -----//
 
+const PostElementButton=document.getElementById("post-element-button");
+const PostElementField=document.getElementById("post-element-field");
 
+PostElementButton.addEventListener('click', ()=>{
+apiRequest(host+"/element", 'POST', { name: PostElementField.value})
+  .then(data=>{
+    console.log(data);
+
+  })
+});
+
+function loadLists(){
+  apiRequest(host+"/lists", 'GET', {})
+    .then(data => {
+      console.log(data);
+      const select=document.querySelector("select");
+      select.innerHTML="";
+      for (const list of data){
+        const option=document.createElement("option");
+        option.value=list.id;
+        option.innerHTML=list.Title;
+        select.appendChild(option);
+      }
+    })
+    .catch(error => console.error(error));
+}
+
+loadLists();

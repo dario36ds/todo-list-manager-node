@@ -8,7 +8,7 @@ app.use(cors());
 app.use(express.json());
 
 
-app.get("/lists", (req,res)=>{
+app.get("/list", (req,res)=>{
   console.log("GET request received");
    db.all(
     "SELECT * FROM List",
@@ -79,6 +79,23 @@ app.delete("/list/:id", (req,res) => {
   );
 });
 
+
+
+// ------------------- //
+app.delete("/element", (req,res) => {});
+
+app.get("/lists", (req,res) => {
+  console.log("GET request received on /lists");
+   db.all(
+    "SELECT * FROM List",
+    [],
+    function (err, rows) {
+      if (err) return res.status(500).json(err);
+
+      res.json(rows);
+    }
+  );
+});
 
 
 app.listen(3000, () => {

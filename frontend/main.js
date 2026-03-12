@@ -107,9 +107,10 @@ apiRequest(host+"/element", 'POST', { name: PostElementField.value , listId: Pos
 
 const getElementButton=document.getElementById("get-element-button");
 const getResult2=document.getElementById("get-result2");
+const getElementIdField=document.getElementById("get-element-id-field");
 
 getElementButton.addEventListener('click', () => {
-  apiRequest(host+"/elements", 'GET', {})
+  apiRequest(host+"/list/"+getElementIdField.value+"/elements", 'GET', {})
     .then(data => {
       console.log(data);
       getResult2.innerHTML="";

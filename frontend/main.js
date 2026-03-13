@@ -12,8 +12,14 @@ const getResult=document.getElementById("get-result");
 getListButton.addEventListener('click', () => {
   apiRequest(host+"/list", 'GET', {})
     .then(data => {
-      getResult.innerHTML="";
       const table= document.createElement("table");
+      const trH = document.createElement("tr");
+      const th = document.createElement("th");
+      th.textContent = "Liste";
+      th.colSpan = 2;
+      trH.appendChild(th);
+      table.appendChild(trH);
+      getResult.innerHTML="";
       for (const user of data){
         const tr = document.createElement("tr");
         const td1 = document.createElement("td");

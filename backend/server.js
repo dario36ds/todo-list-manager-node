@@ -86,11 +86,12 @@ app.delete("/list/:id", (req,res) => {
 
 
 app.post("/element", (req,res) => {
+  const { status } = req.body;
   const { name } = req.body;
   const { listId } = req.body;
   console.log("POST request received on /element");
   console.log(listId);
-  db.run("INSERT INTO Element(Text, List_id) VALUES (? , ?)", [name, listId],
+  db.run("INSERT INTO Element(Text, List_id, Status) VALUES (? , ?, ?)", [name, listId, status],
      function (err) {
       if (err) return res.status(500).json(err);
 
@@ -162,6 +163,21 @@ app.put("/element/:id", (req, res) => {
   );
 });
 
+app.put("/check/:id", (req,res)=>{
+  const{s} = req.body;
+  const{id}=req.params;
+  console.log("PUT request received on /CHECK");
+  db.run(
+    'UPDATE Element SET Status=? WHERE id=?', [s, id],
+    function (err) {
+      if (err) return res.status(500).json(err);
+
+      res.json({
+        id,s
+      });
+    }
+  );
+})
 
 app.listen(3000, () => {
   console.log("Server running on http://localhost:3000");

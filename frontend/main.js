@@ -101,7 +101,7 @@ const PostElementList=document.getElementById("menu-tendina");
 
 
 PostElementButton.addEventListener('click', ()=>{
-apiRequest(host+"/element", 'POST', { name: PostElementField.value , listId: PostElementList.value})
+apiRequest(host+"/element", 'POST', { name: PostElementField.value , listId: PostElementList.value , status:0})
   .then(data=>{
     console.log(data);
 
@@ -132,6 +132,9 @@ getElementButton.addEventListener('click', () => {
         const td2 = document.createElement("td");
         td2.innerHTML=user.Text;
         tr.appendChild(td2);
+        const td3 = document.createElement("td");
+        td3.innerHTML=user.Status;
+        tr.appendChild(td3);
         table.appendChild(tr);
       }
 getResult2.appendChild(table);
@@ -165,3 +168,21 @@ const PutElementButton = document.getElementById("put-element-button");
 
   })
 });
+
+const checkField = document.getElementById("check-field");
+const CheckButton = document.getElementById("check-button");
+let state=0;
+
+
+CheckButton.addEventListener('click', ()=>{
+  const Check = document.getElementById("checkbox").checked;
+  if(Check==true) {
+  state=1;
+} else{state=0;}
+
+  apiRequest(host+"/check/"+checkField.value, "PUT", {s: state})
+  .then(data=>{
+    console.log(data);
+  })
+});
+

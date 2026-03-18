@@ -104,7 +104,7 @@ app.post("/element", (req,res) => {
 });
 
 
-//----LOAD TENDINA-----//
+//----LOAD TENDINA LISTE-----//
 app.get("/lists", (req,res) => {
   console.log("GET request received on /lists");
    db.all(
@@ -123,7 +123,7 @@ app.get("/list/:id/elements", (req,res) => {
   const {id}=req.params;
   console.log("GET request received on /elements");
    db.all(
-    "SELECT * FROM Element JOIN List ON List.id=Element.List_id WHERE List.id = ?", [id], 
+    "SELECT Text , Element.id , Status , List.Title FROM Element JOIN List ON List.id=Element.List_id WHERE List.id = ?", [id], 
     function (err, rows) {
       if (err) return res.status(500).json(err);
 
@@ -165,7 +165,7 @@ app.put("/element/:id", (req, res) => {
 
 app.put("/check/:id", (req,res)=>{
   const{s} = req.body;
-  const{id}=req.params;
+  const{id} = req.params;
   console.log("PUT request received on /CHECK");
   db.run(
     'UPDATE Element SET Status=? WHERE id=?', [s, id],

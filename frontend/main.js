@@ -78,26 +78,11 @@ apiRequest(host+"/list/"+ deleteListIdField.value , 'DELETE' , {})
 
 //----- CRUD ELEMENT  -----//
 
-function loadLists(){
-  apiRequest(host+"/lists", 'GET', {})
-    .then(data => {
-      const select=document.querySelector("select");
-      select.innerHTML="";
-      for (const list of data){
-        const option=document.createElement("option");
-        option.value=list.id;
-        option.innerHTML=list.Title;
-        select.appendChild(option);
-      }
-    })
-    .catch(error => console.error(error));
-}
 
-loadLists();
 
 const PostElementButton=document.getElementById("post-element-button");
 const PostElementField=document.getElementById("post-element-field");
-const PostElementList=document.getElementById("menu-tendina");
+const PostElementList=document.getElementById("menu-tendina-liste");
 
 
 PostElementButton.addEventListener('click', ()=>{
@@ -114,33 +99,54 @@ const getResult2=document.getElementById("get-result2");
 
 
 getElementButton.addEventListener('click', () => {
-  apiRequest(host+"/list/"+PostElementList.value+"/elements", 'GET', {})
+  apiRequest(host + "/list/" + PostElementList.value + "/elements", 'GET', {})
     .then(data => {
-      getResult2.innerHTML="";
-      const table= document.createElement("table");
+      getResult2.innerHTML = "";
+      console.log(data);
+      const table = document.createElement("table");
       const trH = document.createElement("tr");
       const th = document.createElement("th");
       th.textContent = data[0].Title;
       th.colSpan = 2;
       trH.appendChild(th);
       table.appendChild(trH);
-      for (const user of data){
+      for (const user of data) {
         const tr = document.createElement("tr");
         const td1 = document.createElement("td");
-        td1.innerHTML=user.id;
+        td1.innerHTML = user.id;
         tr.appendChild(td1);
         const td2 = document.createElement("td");
-        td2.innerHTML=user.Text;
+        td2.innerHTML = user.Text;
         tr.appendChild(td2);
         const td3 = document.createElement("td");
-        td3.innerHTML=user.Status;
+        td3.innerHTML = user.Status == 0 ? "TODO" : "DONE";
         tr.appendChild(td3);
+        const td4 = document.createElement("td");
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.checked = user.Status == 1;
+        checkbox.addEventListener("change", () => {
+          let stato;
+          const id=user.id;
+          if (checkbox.checked) {
+            stato = 1;
+          }
+          else { stato = 0; }
+          apiRequest(host + "/check/" + id, "PUT", {s: stato})
+            .then(() => {
+              console.log(data);
+            })
+            .catch(err => console.error(err));
+          getElementButton.click();
+        });
+        td4.appendChild(checkbox);
+        tr.appendChild(td4);
         table.appendChild(tr);
       }
-getResult2.appendChild(table);
+      getResult2.appendChild(table);
     })
-    .catch(error => console.error(error));
-});
+}
+);
 
 
 //------DELETE ELEMENTO-----//
@@ -152,6 +158,7 @@ DeleteElementButton.addEventListener('click', ()=> {
   .then(data => {
     console.log(data)
   })
+  getElementButton.click();
 });
 
 //-------- PUT ELEMENTO--------//
@@ -167,22 +174,23 @@ const PutElementButton = document.getElementById("put-element-button");
     console.log(data);
 
   })
+  getElementButton.click();
 });
 
-const checkField = document.getElementById("check-field");
-const CheckButton = document.getElementById("check-button");
-let state=0;
 
+function loadLists(){
+  apiRequest(host+"/lists", 'GET', {})
+    .then(data => {
+      const select=document.querySelector("select");
+      select.innerHTML="";
+      for (const list of data){
+        const option=document.createElement("option");
+        option.value=list.id;
+        option.innerHTML=list.Title;
+        select.appendChild(option);
+      }
+    })
+    .catch(error => console.error(error));
+}
 
-CheckButton.addEventListener('click', ()=>{
-  const Check = document.getElementById("checkbox").checked;
-  if(Check==true) {
-  state=1;
-} else{state=0;}
-
-  apiRequest(host+"/check/"+checkField.value, "PUT", {s: state})
-  .then(data=>{
-    console.log(data);
-  })
-});
-
+loadLists();

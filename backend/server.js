@@ -31,8 +31,10 @@ db.run(
   "INSERT INTO List (Title) VALUES (?)",
   [name],
   function (err) {
-    if (err) return res.status(500).json(err);
-
+    if (err) {
+      console.log(err);
+      return res.status(500).json(err);
+    }
     res.json({
       name
     });

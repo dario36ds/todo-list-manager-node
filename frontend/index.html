@@ -1,69 +1,81 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>ToDo</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<h1>TODO LIST</h1>
-<div style="display: grid; grid-template-columns: auto auto;">
- <div id="get-result"></div>
- <div id="get-result2"></div>
-</div>
 
-<section>
-  <button id="get-list-button">GET LISTS</button>
-</section>
+   
+    
 
-
-<section>
-  <input type="text" id="post-list-field" placeholder="Aggiungi una nuova lista">
-  <button id="post-list-button">ADD LIST</button>
-</section>
+  <section class="lists"> 
+    <div id="get-result"></div>
+    <section>
+      <button id="get-list-button">GET LISTS</button>
+    </section>
 
 
-<section>
-  <input type="number" id="delete-list-id-field" placeholder="ID da eliminare">
-  <button id="delete-list-button">DELETE LIST</button>
-</section>
+    <section>
+      <input type="text" id="post-list-field" placeholder="Aggiungi una nuova lista">
+      <button id="post-list-button">ADD LIST</button>
+    </section>
 
 
-<section>
-  <input type="text" id="put-list-title-field" placeholder="Nuovo nome lista">
-  <input type="number" id="put-list-id-field" placeholder="ID Lista da cambiare">
-  <button id="put-list-button">PUT LISTA</button>
-</section>
-
-<br><br><br><br><br>
-
-<section>
-  <button id="get-element-button">GET ELEMENTS</button>
-</section>
-
-<section>
-  <input type="text" id="post-element-field" placeholder="Aggiungi un nuovo elemento">
-  <button id="post-element-button">ADD ELEMENT</button>
-</section>
-
-<select id="menu-tendina-liste">
-  <option value=""></option>
-</select>
-
-<section>
-   <input type="number" id="delete-element-id-field" placeholder="ID Elemento da eliminare">
-  <button id="delete-element-button">DELETE ELEMENT</button>
-</section>
-
-<section>
-  <input type="text" id="put-element-text-field" placeholder="Nuovo nome elemento">
-  <input type="number" id="put-element-id-field" placeholder="ID Elemento da cambiare">
-  <button id="put-element-button">PUT ELEMENT</button>
-</section>
+    <section>
+      <input type="number" id="delete-list-id-field" placeholder="ID da eliminare">
+      <button id="delete-list-button">DELETE LIST</button>
+    </section>
 
 
-<script src="api.js"></script>
-<script src="main.js"></script>
+    <section>
+      <input type="text" id="put-list-title-field" placeholder="Nuovo nome lista">
+      <input type="number" id="put-list-id-field" placeholder="ID Lista da cambiare">
+      <button id="put-list-button">PUT LISTA</button>
+    </section>
+
+
+  </section>
+  <br><br><br><br><br>
+  <section class="elements">
+    <div id="get-result2"></div>
+    <section>
+      <button id="get-element-button">GET ELEMENTS</button>
+    </section>
+    
+    <section>
+      <input type="text" id="post-element-field" placeholder="Aggiungi un nuovo elemento">
+      <button id="post-element-button">ADD ELEMENT</button>
+    </section>
+    
+    <select id="menu-tendina-liste">
+      <option value=""></option>
+    </select>
+    
+    <select id="menu-tendina-elementi">
+      <option value=""></option>
+    </select>
+    
+
+    <section>
+      <input type="number" id="delete-element-id-field" placeholder="ID Elemento da eliminare">
+      <button id="delete-element-button">DELETE ELEMENT</button>
+    </section>
+
+    <section>
+      <input type="text" id="put-element-text-field" placeholder="Nuovo nome elemento">
+      <input type="number" id="put-element-id-field" placeholder="ID Elemento da cambiare">
+      <button id="put-element-button">PUT ELEMENT</button>
+    </section>
+
+  </section>
+
+  <script src="api.js"></script>
+  <script src="main.js"></script>
 
 </body>
+
 </html>

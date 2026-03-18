@@ -118,6 +118,20 @@ app.get("/lists", (req,res) => {
   );
 });
 
+app.get("/elements/:id", (req,res) => {
+  const { id } = req.params;
+  console.log("GET request received on /lists");
+   db.all(
+    "SELECT * FROM Element JOIN List ON List.id=Element.List_id WHERE List.id = ?",
+    [id],
+    function (err, rows) {
+      if (err) return res.status(500).json(err);
+
+      res.json(rows);
+    }
+  );
+});
+
 
 app.get("/list/:id/elements", (req,res) => {
   const {id}=req.params;

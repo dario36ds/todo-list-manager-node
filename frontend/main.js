@@ -181,7 +181,7 @@ const PutElementButton = document.getElementById("put-element-button");
 function loadLists(){
   apiRequest(host+"/lists", 'GET', {})
     .then(data => {
-      const select=document.querySelector("select");
+      const select=document.getElementById("menu-tendina-liste");
       select.innerHTML="";
       for (const list of data){
         const option=document.createElement("option");
@@ -189,8 +189,28 @@ function loadLists(){
         option.innerHTML=list.Title;
         select.appendChild(option);
       }
+      loadElements();
     })
     .catch(error => console.error(error));
 }
 
 loadLists();
+
+
+function loadElements(){
+  PostElementList.addEventListener('change', () => {
+  apiRequest(host+"/elements/"+PostElementList.value , 'GET', {})
+    .then(data => {
+      const select=document.getElementById("menu-tendina-elementi");
+      select.innerHTML="";
+      for (const list of data){
+        const option=document.createElement("option");
+        option.value=list.id;
+        option.innerHTML=list.Text;
+        select.appendChild(option);
+      }
+    })
+    .catch(error => console.error(error));
+})
+
+}

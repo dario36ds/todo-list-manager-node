@@ -12,6 +12,7 @@ body{
     padding: 20px;
     border-radius: 10px;
 }
+
 .elements{
 
     background-color: rgba(25, 228, 255, 0.341);
@@ -47,4 +48,14 @@ table , td , tr, th {
 }
 td , tr, th {
     padding: 5px;
+}
+
+tr:nth-child(2n+3){
+    background-color: rgba(0, 0, 0, 0.122);
+}
+
+@media (max-width:600px) {
+    body{
+        flex-direction: column;
+    }
 }

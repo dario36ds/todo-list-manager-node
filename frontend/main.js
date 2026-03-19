@@ -1,6 +1,6 @@
 const host = "http://localhost:3000";
 
-
+// -- LOAD TENDINE -- //
 const ElementTendina = document.getElementById("menu-tendina-elementi");
 const ListTendina=document.getElementById("menu-tendina-liste");
 const ListsTendina=document.getElementById("menu-tendina-lists");
@@ -35,6 +35,8 @@ getResult.appendChild(table);
     .catch(error => console.error(error));
 });
 
+
+
 //POST//
 
 const postListButton=document.getElementById("post-list-button");
@@ -46,6 +48,7 @@ apiRequest(host+"/list", 'POST', { name: postListField.value})
     console.log(data);
 
   })
+  getListButton.click();
 });
 
 
@@ -59,6 +62,7 @@ const putListButton=document.getElementById("put-list-button");
     console.log(data);
 
   })
+  getListButton.click();
 });
 
 
@@ -71,31 +75,22 @@ apiRequest(host+"/list/"+ ListsTendina.value , 'DELETE' , {})
    console.log(data);
 
   })
+  getListButton.click();
 });
+
+
+
 
 
 //----- CRUD ELEMENT  -----//
 
 
-
 const PostElementButton=document.getElementById("post-element-button");
 const PostElementField=document.getElementById("post-element-field");
-
-
-
-PostElementButton.addEventListener('click', ()=>{
-apiRequest(host+"/element", 'POST', { name: PostElementField.value , listId: PostElementList.value , status:0})
-  .then(data=>{
-    console.log(data);
-
-  })
-});
-
-
 const getElementButton=document.getElementById("get-element-button");
 const getResult2=document.getElementById("get-result2");
 
-
+ //GET//
 getElementButton.addEventListener('click', () => {
   apiRequest(host + "/list/" + ListTendina.value + "/elements", 'GET', {})
     .then(data => {
@@ -160,8 +155,18 @@ getElementButton.addEventListener('click', () => {
 }
 );
 
+//POST//
+PostElementButton.addEventListener('click', ()=>{
+apiRequest(host+"/element", 'POST', { name: PostElementField.value , listId: ListTendina.value , status:0})
+  .then(data=>{
+    console.log(data);
 
-//------DELETE ELEMENTO-----//
+  })
+  getElementButton.click();
+});
+
+
+//DELETE//
 const DeleteElementIdField = document.getElementById("delete-element-id-field");
 const DeleteElementButton = document.getElementById("delete-element-button");
 
@@ -173,7 +178,7 @@ DeleteElementButton.addEventListener('click', ()=> {
   getElementButton.click();
 });
 
-//-------- PUT ELEMENTO--------//
+//PUT//
 
 const PutElementTextField = document.getElementById("put-element-text-field");
 const PutElementButton = document.getElementById("put-element-button");
@@ -188,6 +193,8 @@ const PutElementButton = document.getElementById("put-element-button");
   })
   getElementButton.click();
 });
+
+// LOAD TENDINE //
 
 function loadLists(){
   apiRequest(host+"/lists", 'GET', {})

@@ -1,6 +1,7 @@
 const host = "http://localhost:3000";
 
 
+const ElementTendina = document.getElementById("menu-tendina-elementi");
 
 //----- CRUD LIST -----//
 
@@ -154,7 +155,7 @@ const DeleteElementIdField = document.getElementById("delete-element-id-field");
 const DeleteElementButton = document.getElementById("delete-element-button");
 
 DeleteElementButton.addEventListener('click', ()=> {
-  apiRequest(host+"/element/"+PutElementTendina.value, 'DELETE', {})
+  apiRequest(host+"/element/"+ElementTendina.value, 'DELETE' , {})
   .then(data => {
     console.log(data)
   })
@@ -166,11 +167,11 @@ DeleteElementButton.addEventListener('click', ()=> {
 const PutElementTextField = document.getElementById("put-element-text-field");
 const PutElementIdField = document.getElementById("put-element-id-field");
 const PutElementButton = document.getElementById("put-element-button");
-const PutElementTendina = document.getElementById("menu-tendina-elementi");
+
 
 
  PutElementButton.addEventListener('click', ()=>{
- apiRequest(host+"/element/"+PutElementTendina.value , 'PUT', { name: PutElementTextField.value})
+ apiRequest(host+"/element/"+ElementTendina.value , 'PUT', { name: PutElementTextField.value})
   .then(data=>{
     console.log(data);
 
@@ -202,6 +203,7 @@ function loadElements(){
   PostElementList.addEventListener('change', () => {
   apiRequest(host+"/elements/"+PostElementList.value , 'GET', {})
     .then(data => {
+      console.log(data);
       const select=document.getElementById("menu-tendina-elementi");
       select.innerHTML="";
       for (const list of data){

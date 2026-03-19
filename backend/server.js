@@ -66,7 +66,7 @@ app.put("/list/:id", (req, res) => {
 
 app.delete("/list/:id", (req,res) => {
   const {id} = req.params;
-  console.log("DELETE request received on /users");
+  console.log("DELETE request received on /list:id");
 
   db.run(
     "DELETE FROM List WHERE id=?",[id],
@@ -124,9 +124,10 @@ app.get("/elements/:id", (req,res) => {
   const { id } = req.params;
   console.log("GET request received on /lists");
    db.all(
-    "SELECT * FROM Element JOIN List ON List.id=Element.List_id WHERE List.id = ?",
+    "SELECT e.id AS id, e.Text AS Text FROM Element AS e JOIN List AS l ON l.id=e.List_id WHERE l.id = ?",
     [id],
     function (err, rows) {
+      console.log(err);
       if (err) return res.status(500).json(err);
 
       res.json(rows);

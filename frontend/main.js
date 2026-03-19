@@ -96,6 +96,9 @@ getElementButton.addEventListener('click', () => {
     .then(data => {
       getResult2.innerHTML = "";
       console.log(data);
+      if(data.length==0){
+        getResult2.innerHTML="NON CI SONO ELEMENTI NELLA LISTA SELEZIONATA"
+      }
       const table = document.createElement("table");
       const trH = document.createElement("tr");
       const th = document.createElement("th");

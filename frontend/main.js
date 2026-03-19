@@ -2,6 +2,8 @@ const host = "http://localhost:3000";
 
 
 const ElementTendina = document.getElementById("menu-tendina-elementi");
+const ListTendina=document.getElementById("menu-tendina-liste");
+const ListsTendina=document.getElementById("menu-tendina-lists");
 
 //----- CRUD LIST -----//
 
@@ -23,9 +25,6 @@ getListButton.addEventListener('click', () => {
       getResult.innerHTML="";
       for (const user of data){
         const tr = document.createElement("tr");
-        const td1 = document.createElement("td");
-        td1.innerHTML=user.id;
-        tr.appendChild(td1);
         const td2 = document.createElement("td");
         td2.innerHTML=user.Title;
         tr.appendChild(td2);
@@ -52,11 +51,10 @@ apiRequest(host+"/list", 'POST', { name: postListField.value})
 
  //PUT//
 const putListTitleField=document.getElementById("put-list-title-field");
-const putListIdField=document.getElementById("put-list-id-field");
 const putListButton=document.getElementById("put-list-button");
 
  putListButton.addEventListener('click', ()=>{
- apiRequest(host+"/list/"+putListIdField.value , 'PUT', { name: putListTitleField.value})
+ apiRequest(host+"/list/"+ListsTendina.value , 'PUT', { name: putListTitleField.value})
   .then(data=>{
     console.log(data);
 
@@ -65,11 +63,10 @@ const putListButton=document.getElementById("put-list-button");
 
 
 //DELETE//
-const deleteListIdField=document.getElementById("delete-list-id-field");
 const deleteListButton=document.getElementById("delete-list-button");
 
 deleteListButton.addEventListener('click', ()=>{
-apiRequest(host+"/list/"+ deleteListIdField.value , 'DELETE' , {})
+apiRequest(host+"/list/"+ ListsTendina.value , 'DELETE' , {})
  .then(data=>{
    console.log(data);
 
@@ -83,7 +80,7 @@ apiRequest(host+"/list/"+ deleteListIdField.value , 'DELETE' , {})
 
 const PostElementButton=document.getElementById("post-element-button");
 const PostElementField=document.getElementById("post-element-field");
-const PostElementList=document.getElementById("menu-tendina-liste");
+
 
 
 PostElementButton.addEventListener('click', ()=>{
@@ -100,7 +97,7 @@ const getResult2=document.getElementById("get-result2");
 
 
 getElementButton.addEventListener('click', () => {
-  apiRequest(host + "/list/" + PostElementList.value + "/elements", 'GET', {})
+  apiRequest(host + "/list/" + ListTendina.value + "/elements", 'GET', {})
     .then(data => {
       getResult2.innerHTML = "";
       console.log(data);
@@ -108,14 +105,28 @@ getElementButton.addEventListener('click', () => {
       const trH = document.createElement("tr");
       const th = document.createElement("th");
       th.textContent = data[0].Title;
-      th.colSpan = 2;
+      th.colSpan = 3;
       trH.appendChild(th);
+
+      const tr1 = document.createElement("tr");
+      const tdtesto = document.createElement("td");
+      tdtesto.textContent = "Titolo";
+      tr1.appendChild(tdtesto);
+
+       const tr2 = document.createElement("tr");
+      const tdstato = document.createElement("td");
+      tdstato.textContent = "Stato";
+      tr1.appendChild(tdstato);
+
+       const tr3 = document.createElement("tr");
+      const tdcheckbox = document.createElement("td");
+      tdcheckbox.textContent = "Done / To-do";
+      tr1.appendChild(tdcheckbox);
+
       table.appendChild(trH);
+      table.appendChild(tr1);
       for (const user of data) {
         const tr = document.createElement("tr");
-        const td1 = document.createElement("td");
-        td1.innerHTML = user.id;
-        tr.appendChild(td1);
         const td2 = document.createElement("td");
         td2.innerHTML = user.Text;
         tr.appendChild(td2);
@@ -165,7 +176,6 @@ DeleteElementButton.addEventListener('click', ()=> {
 //-------- PUT ELEMENTO--------//
 
 const PutElementTextField = document.getElementById("put-element-text-field");
-const PutElementIdField = document.getElementById("put-element-id-field");
 const PutElementButton = document.getElementById("put-element-button");
 
 
@@ -179,8 +189,25 @@ const PutElementButton = document.getElementById("put-element-button");
   getElementButton.click();
 });
 
-
 function loadLists(){
+  apiRequest(host+"/lists", 'GET', {})
+    .then(data => {
+      const select=document.getElementById("menu-tendina-lists");
+      select.innerHTML="";
+      for (const list of data){
+        const option=document.createElement("option");
+        option.value=list.id;
+        option.innerHTML=list.Title;
+        select.appendChild(option);
+      }
+      loadElements();
+    })
+    .catch(error => console.error(error));
+}
+
+loadLists();
+
+function loadList(){
   apiRequest(host+"/lists", 'GET', {})
     .then(data => {
       const select=document.getElementById("menu-tendina-liste");
@@ -196,12 +223,12 @@ function loadLists(){
     .catch(error => console.error(error));
 }
 
-loadLists();
+loadList();
 
 
 function loadElements(){
-  PostElementList.addEventListener('change', () => {
-  apiRequest(host+"/elements/"+PostElementList.value , 'GET', {})
+  ListTendina.addEventListener('change', () => {
+  apiRequest(host+"/elements/"+ListTendina.value , 'GET', {})
     .then(data => {
       console.log(data);
       const select=document.getElementById("menu-tendina-elementi");

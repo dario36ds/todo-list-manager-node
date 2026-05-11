@@ -111,12 +111,11 @@ getElementButton.addEventListener('click', () => {
       tdtesto.textContent = "Titolo";
       tr1.appendChild(tdtesto);
 
-       const tr2 = document.createElement("tr");
+
       const tdstato = document.createElement("td");
       tdstato.textContent = "Stato";
       tr1.appendChild(tdstato);
 
-       const tr3 = document.createElement("tr");
       const tdcheckbox = document.createElement("td");
       tdcheckbox.textContent = "Done / To-do";
       tr1.appendChild(tdcheckbox);

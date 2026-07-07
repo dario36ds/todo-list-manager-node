@@ -5,25 +5,24 @@ const dbPath = path.join(__dirname, "../database/app.sqlite");
 
 const db = new sqlite3.Database(dbPath);
 
-// db.serialize(() => {
-//   db.run(`
+db.serialize(() => {
+  db.run(`
+    CREATE TABLE IF NOT EXISTS "List" (
+      "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+      "Title" TEXT NOT NULL,
+      "Description" TEXT
+    );
+  `);
 
-//  CREATE TABLE "List" (
-// 	"id"	INTEGER,
-// 	"Title"	TEXT NOT NULL,
-// 	"Description"	TEXT,
-// 	PRIMARY KEY("id" AUTOINCREMENT)
-// );
-
-// CREATE TABLE "Element" (
-// 	"id"	INTEGER,
-// 	"Text"	TEXT NOT NULL,
-// 	"Status"	INTEGER,
-// 	"List_id"	INTEGER,
-// 	PRIMARY KEY("id" AUTOINCREMENT),
-// 	FOREIGN KEY("List_id") REFERENCES "List"("id")
-// );`
-// );
-// });
+  db.run(`
+    CREATE TABLE IF NOT EXISTS "Element" (
+      "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+      "Text" TEXT NOT NULL,
+      "Status" INTEGER,
+      "List_id" INTEGER,
+      FOREIGN KEY("List_id") REFERENCES "List"("id")
+    );
+  `);
+});
 
 module.exports = db;
